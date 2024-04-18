@@ -1,7 +1,7 @@
 {
-  "name": "fittrackpro",
+  "name": "WeatherApp",
   "version": "1.0.0",
-  "description": "A fitness tracking app",
+  "description": "A App to view the Weather",
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./dist/app.js",
@@ -11,20 +11,20 @@
     "type": "git",
     "url": "git+https://github.com/DavidCristea797/FitTrackPro.git"
   },
-  "author": "David Cristea",
+  "author": "Elias Mahr",
   "contributors": [
     {
-      "name": "Moritz Brunner"
+      "name": "Timon Schmalzer"
     },
     {
-      "name": "Emil Avdic"
+      "name": "Leopold Mistelberger"
     }
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DavidCristea797/FitTrackPro/issues"
+    "url": "https://github.com/EliasMahr07/WMC_WeatherApp/issues"
   },
-  "homepage": "https://github.com/DavidCristea797/FitTrackPro#readme",
+  "homepage": "https://github.com/EliasMahr07/WMC_WeatherApp#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
