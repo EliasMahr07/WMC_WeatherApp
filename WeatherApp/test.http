@@ -1,0 +1,43 @@
+@apiUrl = http://localhost:3000/api
+@standardUrl = http://localhost:3000
+
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYWRtaW5AZnJ1aXRzLmF0Iiwicm9sZSI6ImFkbWluIn0sImV4cCI6MTcxMzQyNjM2Ny4zMTEsImlhdCI6MTcxMzQyMDk2N30.2sKCEDJ1ma1WYWcn--rmXAZ1bCPJwZexotRWyD2DqYI
+@userToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiam9obkBkb2UuYXQiLCJyb2xlIjoidXNlciJ9LCJleHAiOjE3MTM0MjYzODUuNTU3LCJpYXQiOjE3MTM0MjA5ODV9.z8EnD8o9Jwttpb-L0ULEOub5BHa4EP2z-CqqKyczOuc
+
+###
+POST {{apiUrl}}/auth/login HTTP/1.1
+content-type: application/json
+
+{
+ "email": "admin@fruits.at",
+ "password": "pw4admin"
+}
+
+###
+
+POST {{apiUrl}}/auth/login HTTP/1.1
+content-type: application/json
+
+{
+ "email": "john@doe.at",
+ "password": "pw4user"
+}
+
+###
+
+GET {{apiUrl}}/auth/users HTTP/1.1
+Authorization: Bearer {{adminToken}}
+
+###
+
+GET {{apiUrl}}/auth/users HTTP/1.1
+Authorization: Bearer {{userToken}}
+
+###
+
+GET {{apiUrl}}/auth/users HTTP/1.1
+
+###
+
+GET {{standardUrl}}/admin HTTP/1.1
+Authorization: Bearer {{adminToken}}
