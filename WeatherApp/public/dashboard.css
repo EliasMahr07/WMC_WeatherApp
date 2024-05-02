@@ -13,12 +13,13 @@
   background-color: #F0F8FF ;
 }
 .col-md-4-new{
- margin: 50px;
+  margin: 50px;
   border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   float: left;
   display: block;
   text-align: center;
+  width: 95%;
   /*height: 250px;*/
   background-color: rgb(241, 239, 239)F2;
   transition: all .7s ease-in-out;
@@ -42,6 +43,10 @@
   display: inline-block;
   width: 1rem;
   height: 1rem;
+}
+
+.centre{
+  text-align: center;
 }
 
 /*
