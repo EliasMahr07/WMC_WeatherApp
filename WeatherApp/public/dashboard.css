@@ -1,3 +1,31 @@
+.col-md-4{
+  margin-left: 50px;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  float: left;
+  width: 45%;
+  display: block;
+  text-align: center;
+  height: 250px;
+  background-color: rgb(241, 239, 239)F2;
+  transition: all .7s ease-in-out;
+  background-color: #F0F8FF ;
+}
+.col-md-4-centre{
+  margin-left: 27%;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  
+  width: 45%;
+  display: block;
+  text-align: center;
+  height: 250px;
+  background-color: rgb(241, 239, 239)F2;
+  transition: all .7s ease-in-out;
+  color: #ccc8c0;
+}
 .bi {
   display: inline-block;
   width: 1rem;
@@ -31,7 +59,52 @@
 .sidebar-heading {
   font-size: .75rem;
 }
+/*.col-md-9 {
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}*/
+.fade-in-text {
+  opacity: 0;
+  transform: translateY(-50px); /* Startposition: 50px über dem eigentlichen Ort */
+  animation: fade-in 1s ease forwards;
+}
 
+@keyframes fade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Endposition: an die ursprüngliche Position */
+  }
+}
+.fade-in-text {
+  overflow: hidden;
+}
+
+.fade-in-text > * {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0);
+  animation: fade-in-text 1s forwards;
+}
+
+@keyframes fade-in-text {
+  from {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /*
  * Navbar
  */
