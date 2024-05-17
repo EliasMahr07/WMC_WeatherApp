@@ -16,10 +16,10 @@
   margin: 50px;
   border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  float: left;
+  float: right;
   display: block;
   text-align: center;
-  width: 95%;
+  width: 70%;
   /*height: 250px;*/
   background-color: rgb(241, 239, 239)F2;
   transition: all .7s ease-in-out;
