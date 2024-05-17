@@ -20,6 +20,7 @@
   display: block;
   text-align: center;
   width: 70%;
+  margin-left: 15%;
   /*height: 250px;*/
   background-color: rgb(241, 239, 239)F2;
   transition: all .7s ease-in-out;
