@@ -1,6 +1,6 @@
 import express from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { users } from '..user-store.ts';
+import { users } from '../data/user-store';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { isAuthenticated, isAdmin } from './auth-handler';
@@ -58,4 +58,4 @@ authRouter.post("/login", (request, response) => {
         expiresAt: expiresAt.getTime(),
         accessToken: token,
     });
-});#
+});
