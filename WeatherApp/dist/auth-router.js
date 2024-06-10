@@ -1,30 +1,27 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authRouter = void 0;
-const express_1 = __importDefault(require("express"));
-const http_status_codes_1 = require("http-status-codes");
-const user_store_1 = require("../data/user-store");
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const auth_handler_1 = require("./auth-handler");
+var express_1 = require("express");
+var http_status_codes_1 = require("http-status-codes");
+var __user_store_ts_1 = require("..user-store.ts");
+var bcrypt_1 = require("bcrypt");
+var jsonwebtoken_1 = require("jsonwebtoken");
+var auth_handler_1 = require("../src/auth-handler");
 require('dotenv').config();
-const SECRET_KEY = process.env.SECRET_KEY;
+var SECRET_KEY = process.env.SECRET_KEY;
 exports.authRouter = express_1.default.Router();
-exports.authRouter.use((req, res, next) => {
+exports.authRouter.use(function (req, res, next) {
     console.log('Request URL:', req.originalUrl);
     next();
 });
-exports.authRouter.get("/users", auth_handler_1.isAuthenticated, auth_handler_1.isAdmin, (request, response) => {
-    response.status(http_status_codes_1.StatusCodes.OK).json(user_store_1.users);
+exports.authRouter.get("/users", auth_handler_1.isAuthenticated, auth_handler_1.isAdmin, function (request, response) {
+    response.status(http_status_codes_1.StatusCodes.OK).json(__user_store_ts_1.users);
 });
-exports.authRouter.post("/login", (request, response) => {
-    const loginUser = request.body;
+exports.authRouter.post("/login", function (request, response) {
+    var loginUser = request.body;
     console.log(request.body);
     console.log(loginUser);
-    const user = user_store_1.users.find((u) => u.email === loginUser.email);
+    var user = __user_store_ts_1.users.find(function (u) { return u.email === loginUser.email; });
     if (user === undefined) {
         response.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).json("User does not exist");
         return;
@@ -33,13 +30,13 @@ exports.authRouter.post("/login", (request, response) => {
         response.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).json("Wrong password");
         return;
     }
-    const userClaims = {
+    var userClaims = {
         email: user.email,
         role: user.role,
     };
-    const minutes = 90;
-    const expiresAt = new Date(Date.now() + minutes * 60000);
-    const token = jsonwebtoken_1.default.sign({
+    var minutes = 90;
+    var expiresAt = new Date(Date.now() + minutes * 60000);
+    var token = jsonwebtoken_1.default.sign({
         user: userClaims,
         exp: expiresAt.getTime() / 1000,
     }, SECRET_KEY);
@@ -49,3 +46,4 @@ exports.authRouter.post("/login", (request, response) => {
         accessToken: token,
     });
 });
+#;

@@ -1,5 +1,59 @@
+import sqlite3 from 'sqlite3';
+import {open} from 'sqlite';
+import {DB} from './database';
 import express from 'express';
-import { users } from '../data/user-store';
+
+interface User{
+  id:number,
+  name:String,
+  age:number
+}
+
+async function connectDB(){
+  const db = await open({
+    filename: './users.db',
+    driver :sqlite3.Database
+  });
+}
+
+async function insertUser(id:number,name:string,age:number):Promise<boolean>{
+  try{
+    const db = DB.createDBConnection();
+    const statment = (await db).prepare('INSERT INTO USERS (id,name,age) VALUES (?1,?2,?3)');
+    (await statment).bind({1:id},{2:name},{3:age});
+    (await statment).run();
+    (await statment).finalize();
+    (await db).close;
+    return true;
+  }catch{
+    return false;
+  }
+}
+
+async function deleteUser(id:number): Promise<boolean>{
+  try{
+    const db = DB.createDBConnection();
+    const statement = (await db).prepare('DELETE FROM users WHERE id = ?1');
+    (await statement).bind({1:id});
+    (await statement).run();
+    (await statement).finalize();
+    (await db).close;
+    return true;
+  }
+  catch{
+    return false;
+  }
+}
+
+async function main(){
+  DB.createDBConnection();
+  insertUser(1,"Tim",16);
+  insertUser(2,"Mo",17);
+  deleteUser(2);
+}
+connectDB();
+main();
+
 import { authRouter } from './auth-router';
 import { isAdmin, isAuthenticated } from './auth-handler';
 import path from 'path';
@@ -44,4 +98,3 @@ app.listen(port, () => {
 });
 
 
-console.log(users);
