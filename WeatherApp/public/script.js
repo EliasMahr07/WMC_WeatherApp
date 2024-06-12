@@ -1,12 +1,9 @@
-
-const saltRunds = 8;
-document.getElementById("login").addEventListener("click", login());
+document.getElementById("login").addEventListener("click", login);
 function login(){
     console.log("penis");
     const userInput = document.getElementById("user");
     const passwordInput = document.getElementById("password");
-    window.location.href = 'index.html';
-    if(passwordInput == '1234'){
+    if(passwordInput.value == 'pw4admin'){
       window.location.href = 'index.html';
     }
     const loginCredentials = {
