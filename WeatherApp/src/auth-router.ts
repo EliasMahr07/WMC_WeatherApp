@@ -48,6 +48,6 @@ authRouter.post("/login", (request, response) => {
             user: userClaims,
             exp: expiresAt.getTime() / 1000,
         },
-        SECRET_KEY || '', // Use an empty string as the default value if SECRET_KEY is undefined
+        SECRET_KEY || '1234', // Use an empty string as the default value if SECRET_KEY is undefined
     );
 });

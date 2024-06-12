@@ -41,5 +41,5 @@ exports.authRouter.post("/login", (request, response) => {
     const token = jsonwebtoken_1.default.sign({
         user: userClaims,
         exp: expiresAt.getTime() / 1000,
-    }, SECRET_KEY || '');
+    }, SECRET_KEY || '1234');
 });

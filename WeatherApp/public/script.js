@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 
 const saltRunds = 8;
 document.getElementById("login").addEventListener("click", login());
@@ -6,6 +5,7 @@ function login(){
     console.log("penis");
     const userInput = document.getElementById("user");
     const passwordInput = document.getElementById("password");
+    window.location.href = 'index.html';
     if(passwordInput == '1234'){
       window.location.href = 'index.html';
     }
