@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const http_status_codes_1 = require("http-status-codes");
-const user_store_1 = require("../data/user-store");
+const user_store_1 = require("./user-store");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const auth_handler_1 = require("./auth-handler");
@@ -37,15 +37,9 @@ exports.authRouter.post("/login", (request, response) => {
         email: user.email,
         role: user.role,
     };
-    const minutes = 90;
-    const expiresAt = new Date(Date.now() + minutes * 60000);
+    const expiresAt = new Date(Date.now() + 30 * 60000);
     const token = jsonwebtoken_1.default.sign({
         user: userClaims,
         exp: expiresAt.getTime() / 1000,
-    }, SECRET_KEY);
-    response.status(http_status_codes_1.StatusCodes.OK).json({
-        userClaims: userClaims,
-        expiresAt: expiresAt.getTime(),
-        accessToken: token,
-    });
+    }, SECRET_KEY || '');
 });

@@ -1,18 +1,21 @@
 import express from 'express';
-import { users } from '../data/user-store';
+import { users } from './user-store';
 import { authRouter } from './auth-router';
 import { isAdmin, isAuthenticated } from './auth-handler';
 import path from 'path';
 
 const app = express();
-
+__dirname = path.resolve();
+const rootDir = path.join(__dirname,"./public");
 app.use(express.json());
 
 app.use('../assets', express.static(path.join(__dirname, 'assets')));
 // Route
 app.get('/', (req, res, next) => {
-  if (false) { 
+  if (true) { 
       res.send('Hello, World!'); 
+      res.sendFile('login.html',{root:rootDir});
+      console.log("test");
     } else {
     next();
   }

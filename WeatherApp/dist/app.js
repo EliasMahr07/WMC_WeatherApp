@@ -4,17 +4,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const user_store_1 = require("../data/user-store");
+const user_store_1 = require("./user-store");
 const auth_router_1 = require("./auth-router");
 const auth_handler_1 = require("./auth-handler");
 const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
+__dirname = path_1.default.resolve();
+const rootDir = path_1.default.join(__dirname, "./public");
 app.use(express_1.default.json());
 app.use('../assets', express_1.default.static(path_1.default.join(__dirname, 'assets')));
 // Route
 app.get('/', (req, res, next) => {
-    if (false) {
+    if (true) {
         res.send('Hello, World!');
+        res.sendFile('login.html', { root: rootDir });
+        console.log("test");
     }
     else {
         next();

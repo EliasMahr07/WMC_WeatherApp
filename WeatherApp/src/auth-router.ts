@@ -1,6 +1,6 @@
 import express from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { users } from '../data/user-store';
+import { users } from './user-store';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { isAuthenticated, isAdmin } from './auth-handler';
@@ -42,20 +42,12 @@ authRouter.post("/login", (request, response) => {
         email: user.email,
         role: user.role,
     };
-
-    const minutes = 90;
-    const expiresAt = new Date(Date.now() + minutes * 60000);
+    const expiresAt = new Date(Date.now() + 30 * 60000);
     const token = jwt.sign(
         {
             user: userClaims,
             exp: expiresAt.getTime() / 1000,
         },
-        SECRET_KEY
+        SECRET_KEY || '', // Use an empty string as the default value if SECRET_KEY is undefined
     );
-
-    response.status(StatusCodes.OK).json({
-        userClaims: userClaims,
-        expiresAt: expiresAt.getTime(),
-        accessToken: token,
-    });
 });

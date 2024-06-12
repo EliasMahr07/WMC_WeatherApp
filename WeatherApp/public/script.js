@@ -1,9 +1,13 @@
+import bcrypt from 'bcrypt';
+
+const saltRunds = 8;
+
 function login() {
     const userInput = document.getElementById("user");
     const passwordInput = document.getElementById("password");
     const loginCredentials = {
         "email": userInput.value,
-        "password": passwordInput.value
+        "password":  passwordInput.value
        };
        const { accessToken, expiresAt, userClaims } = 
        fetchRestEndpoint(
@@ -14,6 +18,8 @@ function login() {
             sessionStorage.setItem('jwt', data.accessToken);
             window.location.href = 'index.html';
         }).catch((error) => {
+          console.log(passwordInput);
+          console.log();
             setResults("login failed");
         });
        
