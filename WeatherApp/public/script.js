@@ -12,6 +12,7 @@ function login() {
         loginCredentials).then((data) => {
             setResults(JSON.stringify(data));
             sessionStorage.setItem('jwt', data.accessToken);
+            window.location.href = 'index.html';
         }).catch((error) => {
             setResults("login failed");
         });

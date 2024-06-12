@@ -12,6 +12,18 @@
   transition: all .7s ease-in-out;
   background-color: #F0F8FF ;
 }
+.col-md-4-new-new{
+  border-radius: 10px;
+  margin-left: 27%;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: 45%;
+  display: block;
+  text-align: center;
+  height: 250px;
+  background-color: rgb(241, 239, 239)F2;
+  transition: all .7s ease-in-out;
+  background-color: #F0F8FF ;
+}
 .col-md-4-new{
   margin: 50px;
   border-radius: 10px;
