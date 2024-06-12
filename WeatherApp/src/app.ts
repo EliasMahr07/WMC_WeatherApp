@@ -13,7 +13,6 @@ app.use('../assets', express.static(path.join(__dirname, 'assets')));
 // Route
 app.get('/', (req, res, next) => {
   if (true) { 
-      res.send('Hello, World!'); 
       res.sendFile('login.html',{root:rootDir});
       console.log("test");
     } else {
