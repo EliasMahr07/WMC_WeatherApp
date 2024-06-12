@@ -14,15 +14,34 @@
 }
 .col-md-4-new-new{
   border-radius: 10px;
+  border-color: #F0F8FF;
   margin-left: 27%;
+  font-size:x-large;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   width: 45%;
   display: block;
+  padding: 5%;
   text-align: center;
-  height: 250px;
+  height: 500px;
   background-color: rgb(241, 239, 239)F2;
   transition: all .7s ease-in-out;
-  background-color: #F0F8FF ;
+  /*background-color: #F0F8FF ;*/
+}
+.col-md-4-new-new button{
+  border-radius: 6px;
+  border-width:1px;
+  padding: 1%;;
+  border:none;
+  width:200px;
+  background-color: #F0F8FF;
+}
+.col-md-4-new-new input{
+  border: none; /* Entfernt alle Standard-Rahmen */
+    border-bottom: 2px solid #000; /* Fügt einen unteren Rand hinzu */
+    padding: 5px 0;
+    background-color: #ffff;
+}.col-md-4-new-new input:focus{
+  outline: none;
 }
 .col-md-4-new{
   margin: 50px;
