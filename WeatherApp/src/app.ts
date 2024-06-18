@@ -1,7 +1,9 @@
 import express from 'express';
 import { users } from './user-store';
-import { authRouter } from './auth-router';
-import { isAdmin, isAuthenticated } from './auth-handler';
+import {addWeatherData, getWeatherData, createDatabase} from './weatherservice';
+
+//import { authRouter } from './auth-router';
+//import { isAdmin, isAuthenticated } from './auth-handler';
 import path from 'path';
 
 const app = express();
@@ -20,17 +22,30 @@ app.get('/', (req, res, next) => {
   }
 });
 
+app.post('/add-weather', async (req, res) => {
+  const { date, temperature, humidity, room } = req.body;
+  await addWeatherData(date, temperature, humidity, room);
+  res.send('Weather data added successfully');
+});
+
+app.get('/weather', async (req, res) => {
+  //const weatherData = await getWeatherData();
+  res.sendFile('index.html',{root:rootDir});
+  //res.render('index.html', { weatherData });
+});
+/*
 app.get('/admin', isAuthenticated, isAdmin, (req, res, next) => {
     res.send('Hello, Admin!');
 });
-
-app.use(express.static('public'))
+*/
+app.use(express.static('public'));
 // Verbinde den Router mit deiner Express-App
-app.use('/api/auth', authRouter);
+//app.use('/api/auth', authRouter);
 
 // Starte den Server
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+app.listen(port, async () => {
+  await createDatabase();
   console.log(`Server läuft auf Port ${port}`);
 });
 

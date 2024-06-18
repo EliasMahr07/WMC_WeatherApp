@@ -1,3 +1,4 @@
+/*
 import express from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { users } from './user-store';
@@ -51,3 +52,4 @@ authRouter.post("/login", (request, response) => {
         SECRET_KEY || '1234', // Use an empty string as the default value if SECRET_KEY is undefined
     );
 });
+*/

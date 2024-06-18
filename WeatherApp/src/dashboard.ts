@@ -1,4 +1,4 @@
-import { DB } from './database';
+/*import { DB } from './database';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -28,3 +28,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 });
+*/

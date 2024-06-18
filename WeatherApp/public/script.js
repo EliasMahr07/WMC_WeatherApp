@@ -4,7 +4,7 @@ function login(){
     const userInput = document.getElementById("user");
     const passwordInput = document.getElementById("password");
     if(passwordInput.value == 'pw4admin' && userInput.value == 'admin@fruits.at'){
-      window.location.href = 'index.html';
+      window.location.href = 'weather';
     }
     const loginCredentials = {
         "email": userInput.value,

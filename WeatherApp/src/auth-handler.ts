@@ -1,4 +1,4 @@
-import { NextFunction } from "express";
+/*import { NextFunction } from "express";
 import { Request, Response } from "express";
 import jwt, {JwtPayload} from 'jsonwebtoken';
 require('dotenv').config();
@@ -42,3 +42,4 @@ export const isAdmin = (req: Request,res: Response, next:
             res.status(401).send("Authentication required");
         } 
 };
+*/

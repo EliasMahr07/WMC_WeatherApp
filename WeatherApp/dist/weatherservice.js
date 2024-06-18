@@ -12,9 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createDatabase = void 0;
+exports.createDatabase = exports.getWeatherData = exports.addWeatherData = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const sqlite_1 = require("sqlite");
+function addWeatherData(date, temperature, humidity, room) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield (0, sqlite_1.open)({
+            filename: 'database.db',
+            driver: sqlite3_1.default.Database
+        });
+        try {
+            yield db.run('INSERT INTO weather (date, temperature, humidity, room) VALUES (?, ?, ?, ?)', [date, temperature, humidity, room]);
+            console.log('Inserted weather data successfully.');
+        }
+        catch (error) {
+            console.error('Error inserting weather data:', error);
+        }
+        finally {
+            yield db.close();
+        }
+    });
+}
+exports.addWeatherData = addWeatherData;
 function createDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield (0, sqlite_1.open)({
@@ -34,3 +53,23 @@ function createDatabase() {
     });
 }
 exports.createDatabase = createDatabase;
+function getWeatherData() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield (0, sqlite_1.open)({
+            filename: 'database.db',
+            driver: sqlite3_1.default.Database
+        });
+        try {
+            const weatherData = yield db.all('SELECT * FROM weather');
+            return weatherData;
+        }
+        catch (error) {
+            console.error('Error retrieving weather data:', error);
+            return [];
+        }
+        finally {
+            yield db.close();
+        }
+    });
+}
+exports.getWeatherData = getWeatherData;
