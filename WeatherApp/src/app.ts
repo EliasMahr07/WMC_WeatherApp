@@ -1,6 +1,6 @@
 import express from 'express';
 import { users } from './user-store';
-import {addWeatherData, getWeatherData, createDatabase} from './weatherservice';
+import {addWeatherData, getWeatherData, createDatabase, deleteAllData} from './weatherservice';
 
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
@@ -33,6 +33,16 @@ app.get('/get-weather', async (req, res) => {
     res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
   } catch (error) {
     res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Wetterdaten');
+  }
+});
+
+app.post('/delete-all-data', async (req, res) => {
+  try {
+      await deleteAllData();
+      res.json({ success: true });
+  } catch (error) {
+      console.error('Error deleting weather data:', error);
+      res.json({ success: false });
   }
 });
 
