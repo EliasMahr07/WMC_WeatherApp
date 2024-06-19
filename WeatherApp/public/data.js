@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const tableBody = document.getElementById('weatherTable').getElementsByTagName('tbody')[0];
         tableBody.innerHTML = ''; 
         data.forEach(row => {
-            console.log("hahaha");
           const tr = document.createElement('tr');
           tr.innerHTML = `<td>${row.id}</td><td>${row.date}</td><td>${row.temperature}</td><td>${row.humidity}</td><td>${row.room}</td>`;
           tableBody.appendChild(tr);
