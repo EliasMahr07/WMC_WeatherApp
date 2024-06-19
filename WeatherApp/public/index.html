@@ -260,40 +260,17 @@
 
       <h2>Current Data</h2>
       <div class="table-responsive small">
-        <table class="table table-striped table-sm">
+        <table id="weatherTable" class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">Day</th>
+              <th scope="col">ID</th>
+              <th scope="col">Room</th>
               <th scope="col">Time</th>
-              <th scope="col">Temperature Kitchen</th>
-              <th scope="col">Temperature Living Room</th>
-              
-              
+              <th scope="col">Temperature</th>
+              <th scope="col">Humidity</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>01.01.24</td>
-              <td>10:45</td>
-              <td>10</td>
-              <td>5</td>
-              
-            </tr>
-            <tr>
-              <td>01.02.24</td>
-              <td>12:45</td>
-              <td>15</td>
-              <td>8</td>
-              
-            </tr>
-
-            <tr>
-              <td>01.03.24</td>
-              <td>16:12</td>
-              <td>3</td>
-              <td>3</td>
-              
-            </tr>
           </tbody>
         </table>
       </div>
@@ -301,6 +278,6 @@
   </div>
 </div>
 <script src="bootstrap.bundle.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script><script src="dashboard.js"></script></body>
+<script src="data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script><script type="module" src="dashboard.js"></script></body>
 </html>

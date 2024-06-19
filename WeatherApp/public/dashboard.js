@@ -1,7 +1,6 @@
 const kitchenData = [10, 15, 3, 9];
 const livingroomData = [5, 8, 3, 15];
 
-
 const dayLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const hourLabels = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00'];
 const monthLabels = ['Jan', 'Feb', 'März', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
@@ -24,3 +23,4 @@ const myLineChart = new Chart(ctx, {
         ],
     },
 });
+

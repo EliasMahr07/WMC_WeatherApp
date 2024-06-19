@@ -28,6 +28,15 @@ app.post('/add-weather', async (req, res) => {
   res.send('Weather data added successfully');
 });
 
+app.get('/get-weather', async (req, res) => {
+  try {
+    const weatherData = await getWeatherData();
+    res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
+  } catch (error) {
+    res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Wetterdaten');
+  }
+});
+
 app.get('/weather', async (req, res) => {
   //const weatherData = await getWeatherData();
   res.sendFile('index.html',{root:rootDir});

@@ -38,6 +38,15 @@ app.post('/add-weather', (req, res) => __awaiter(void 0, void 0, void 0, functio
     yield (0, weatherservice_1.addWeatherData)(date, temperature, humidity, room);
     res.send('Weather data added successfully');
 }));
+app.get('/get-weather', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const weatherData = yield (0, weatherservice_1.getWeatherData)();
+        res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
+    }
+    catch (error) {
+        res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Wetterdaten');
+    }
+}));
 app.get('/weather', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //const weatherData = await getWeatherData();
     res.sendFile('index.html', { root: rootDir });
