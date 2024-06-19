@@ -6,6 +6,9 @@ function login(){
     if(passwordInput.value == 'pw4admin' && userInput.value == 'admin@fruits.at'){
       window.location.href = 'weather';
     }
+    else{
+      setResults("login failed");
+    }
     const loginCredentials = {
         "email": userInput.value,
         "password":  passwordInput.value
@@ -21,7 +24,6 @@ function login(){
         }).catch((error) => {
           console.log(passwordInput);
           console.log();
-            setResults("login failed");
         });
        
 }

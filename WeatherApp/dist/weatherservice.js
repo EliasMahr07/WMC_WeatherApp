@@ -15,29 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteAllData = exports.createDatabase = exports.getWeatherData = exports.addWeatherData = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const sqlite_1 = require("sqlite");
-/*
-const deleteButton = document.getElementById('deleteButton');
-if (deleteButton) {
-    deleteButton.addEventListener('click', async () => {
-        try {
-            const response = await fetch('/delete-all-data', {
-                method: 'POST',
-            });
-            const result = await response.json();
-            if (result.success) {
-                alert('Deleted all weather data successfully.');
-            } else {
-                alert('Failed to delete weather data.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred while deleting weather data.');
-        }
-    });
-} else {
-    console.error('Button with ID "deleteButton" not found.');
-}
-*/
 function addWeatherData(date, temperature, humidity, room) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield (0, sqlite_1.open)({
