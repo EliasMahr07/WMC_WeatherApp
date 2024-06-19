@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(response => response.json())
       .then(data => {
         const tableBody = document.getElementById('weatherTable').getElementsByTagName('tbody')[0];
-        console.log("hahaha");
         tableBody.innerHTML = ''; 
         data.forEach(row => {
             console.log("hahaha");
