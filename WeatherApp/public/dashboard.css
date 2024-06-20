@@ -96,6 +96,20 @@
 }.col-md-4-new-api input:focus{
   outline: none;
 }
+/* Fügt Abstand zwischen den Zellen hinzu */
+#userList td {
+  border : 1px solid #000;
+  padding: 15px;
+  background-color: #F0F8FF;
+  
+}
+
+/* Alternativ können Sie border-spacing verwenden, wenn Sie möchten, dass der Abstand um die gesamte Zelle herum angewendet wird */
+#userList {
+  
+  border-collapse: separate;
+  border-spacing: 0 20px; /* Erster Wert ist vertikaler Abstand, zweiter Wert ist horizontaler Abstand */
+}
 .col-md-4-new-api button{
   border: none; /* Entfernt alle Standard-Rahmen */
     

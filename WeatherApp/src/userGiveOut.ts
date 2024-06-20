@@ -1,5 +1,5 @@
-import { getUsers } from './userservice';
-
+//import { getUsers } from './userservice';
+/*
 async function loadUsers() {
     const userList = document.getElementById('userList');
     if (!userList) {
@@ -19,4 +19,4 @@ async function loadUsers() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadUsers);
+document.addEventListener('DOMContentLoaded', loadUsers);*/

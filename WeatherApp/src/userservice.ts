@@ -90,8 +90,15 @@ async function createUserTable() {
 async function getUsers() {
     const db = await openDb();
     console.log("getUsers");
+    let tmp = "";
+
+
     try {
         const users = await db.all('SELECT * FROM users');
+        users.forEach(user => {
+            tmp = user.username + " " + user.email + " " + user.password + " " + user.role + " " + user.apikey;
+            
+        });
         console.log("users: "+ users);
         return users;
     } catch (error) {
@@ -103,5 +110,14 @@ async function getUsers() {
 }
 
 export { getUsers, addUsers, createUserTable, login };
+
+async function main() {
+    console.log('penis');
+    let tmp = 
+    getUsers();
+    console.log(tmp);
+}
+
+main();
 
 

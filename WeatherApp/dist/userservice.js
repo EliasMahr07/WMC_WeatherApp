@@ -108,8 +108,12 @@ function getUsers() {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield openDb();
         console.log("getUsers");
+        let tmp = "";
         try {
             const users = yield db.all('SELECT * FROM users');
+            users.forEach(user => {
+                tmp = user.username + " " + user.email + " " + user.password + " " + user.role + " " + user.apikey;
+            });
             console.log("users: " + users);
             return users;
         }
@@ -123,3 +127,11 @@ function getUsers() {
     });
 }
 exports.getUsers = getUsers;
+function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log('penis');
+        let tmp = getUsers();
+        console.log(tmp);
+    });
+}
+main();
