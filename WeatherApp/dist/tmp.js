@@ -1,4 +1,4 @@
-import { getUsers } from '../dist/userservice';
+import { getUsers } from './userservice';
 
 async function loadUsers() {
     const userList = document.getElementById('userList');

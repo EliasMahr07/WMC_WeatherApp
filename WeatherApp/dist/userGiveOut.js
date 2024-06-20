@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userservice_1 = require("./userservice");
-// Funktion zum Laden und Anzeigen der User
 function loadUsers() {
     return __awaiter(this, void 0, void 0, function* () {
         const userList = document.getElementById('userList');
@@ -31,5 +30,4 @@ function loadUsers() {
         }
     });
 }
-// Ruft die Funktion auf, sobald das Skript geladen wurde
 document.addEventListener('DOMContentLoaded', loadUsers);
