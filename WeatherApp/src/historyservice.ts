@@ -42,7 +42,7 @@ async function doesUserIdExists(userid: number) {
 
 
 
-async function createDatabase() {
+async function createHistroyTable() {
     const db = await openDb();
 
     await db.exec(`
@@ -70,4 +70,4 @@ async function getHistroy() {
     }
 }
 
-export { getHistroy, addHistroy, createDatabase };
+export { getHistroy, addHistroy, createHistroyTable };

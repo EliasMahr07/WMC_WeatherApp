@@ -11,14 +11,14 @@ async function openDb() {
     });
 }
 
-async function addUsers(username: string, email: number, password: string, apikey: string) {
+async function addUsers(username: string, email: string, password: string, apikey: string, role: String) {
     const db = await openDb();
 
     try {
         if(await doesUserExists(username))
         {
             const hashedPassword = await bcrypt.hash(password, 10);
-            await db.run('INSERT INTO users (username, email, password, apikey) VALUES (?, ?, ?, ?)', [username, email, hashedPassword, apikey]);
+            await db.run('INSERT INTO users (username, email, password, apikey, role) VALUES (?, ?, ?, ?, ?)', [username, email, hashedPassword, apikey, role]);
             console.log('Inserted user sucessfully');
         }
         else{
@@ -32,11 +32,29 @@ async function addUsers(username: string, email: number, password: string, apike
     }
 }
 
+async function login(username: string, password: string){
+    const db = await openDb();
+    const user = await db.get('SELECT password FROM users WHERE username = ?', username);
+    await db.close();
+    if (user) {
+        console.log("user.password");
+        console.log(user.password);
+        console.log("passwort");
+        console.log(password);
+        console.log("user sucessfully logged in");
+        
+        
+    } else {
+        console.log("false userdata")
+        return false;
+    }
+}
+
 async function doesUserExists(username: string) {
     const db = await openDb();
     let result;
     try{
-        const result = await db.get('SELECT 1 FROM users WHERE username = ?', username);
+        result = await db.get('SELECT 1 FROM users WHERE username = ?', username);
     }
     catch (error){
         console.error('Error getting users', error);
@@ -46,7 +64,7 @@ async function doesUserExists(username: string) {
     return !!result;
 }
 
-async function createDatabase() {
+async function createUserTable() {
     const db = await openDb();
 
     await db.exec(`
@@ -77,4 +95,6 @@ async function getUsers() {
     }
 }
 
-export { getUsers, addUsers, createDatabase };
+export { getUsers, addUsers, createUserTable, login };
+
+
