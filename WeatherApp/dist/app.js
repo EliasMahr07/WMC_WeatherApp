@@ -77,7 +77,7 @@ app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, weatherservice_1.createDatabase)();
     yield (0, historyservice_1.createHistroyTable)();
     yield (0, userservice_1.createUserTable)();
-    //await addUsers("Leopold", "leopold.mistelberger@gmx.at", "1234", "739821798", "admin");
+    //await addUsers("Leopoldd", "leopold.mistelberger@gmx.at", "1234", "739821798", "admin");
     //await login("Leopold", "1234");
     console.log(`Server läuft auf Port ${port}`);
 }));
