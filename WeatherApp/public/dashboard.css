@@ -14,6 +14,10 @@
   background-color: #F0F8FF ;
  
 }
+#plus{
+  border: none;
+  background-color: #F0F8FF;
+}
 .col-md-4-new-new{
   border-radius: 10px;
   border-color: #F0F8FF;
@@ -78,18 +82,32 @@
   display: block;
   float: right;
   padding: 25px;
-  /*height: 250px;*/
+  width: 500px;
   background-color: rgb(241, 239, 239)F2;
-  transition: all .7s ease-in-out;
+  transition: all .7s ease-in-out ;
   opacity: 0.9;
   background-color: #F0F8FF ;
+}
+.col-md-4-new-api input{
+  border: none; /* Entfernt alle Standard-Rahmen */
+    border-bottom: 2px solid #000; /* Fügt einen unteren Rand hinzu */
+    padding: 5px 0;
+    background-color: #F0F8FF;
+}.col-md-4-new-api input:focus{
+  outline: none;
+}
+.col-md-4-new-api button{
+  border: none; /* Entfernt alle Standard-Rahmen */
+    
+    background-color: #F0F8FF;
+}.col-md-4-new-api button:hover{
+  border-bottom: #000;
 }
 .col-md-4-centre{
   margin-left: 27%;
   margin-bottom: 50px;
   border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  
   width: 45%;
   display: block;
   text-align: center;
