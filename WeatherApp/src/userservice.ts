@@ -55,7 +55,8 @@ async function createDatabase() {
             username text,
             email Text,
             password Text,
-            apikey text
+            role Text,
+            apikey Text
         )
     `);
 
