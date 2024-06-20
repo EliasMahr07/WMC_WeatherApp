@@ -107,8 +107,10 @@ exports.createUserTable = createUserTable;
 function getUsers() {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield openDb();
+        console.log("getUsers");
         try {
             const users = yield db.all('SELECT * FROM users');
+            console.log("users: " + users);
             return users;
         }
         catch (error) {

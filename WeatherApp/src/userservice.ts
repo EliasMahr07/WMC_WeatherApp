@@ -89,9 +89,10 @@ async function createUserTable() {
 
 async function getUsers() {
     const db = await openDb();
-
+    console.log("getUsers");
     try {
         const users = await db.all('SELECT * FROM users');
+        console.log("users: "+ users);
         return users;
     } catch (error) {
         console.error('Error retrieving users:', error);
