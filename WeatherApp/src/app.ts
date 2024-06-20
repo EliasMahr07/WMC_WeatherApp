@@ -1,6 +1,8 @@
 import express from 'express';
 import { users } from './user-store';
 import {addWeatherData, getWeatherData, createDatabase, deleteAllData} from './weatherservice';
+import {getHistroy, addHistroy, createHistroyTable} from './historyservice';
+import {getUsers, addUsers, createUserTable, login} from './userservice';
 
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
@@ -15,7 +17,7 @@ app.use('../assets', express.static(path.join(__dirname, 'assets')));
 // Route
 app.get('/', (req, res, next) => {
   if (true) { 
-      res.sendFile('login.html',{root:rootDir});
+      res.sendFile('index.html',{root:rootDir});
     } else {
     next();
   }
@@ -64,6 +66,12 @@ app.use(express.static('public'));
 const port = process.env.PORT || 3000;
 app.listen(port, async () => {
   await createDatabase();
+  await createHistroyTable();
+  await createUserTable();
+  //await addUsers("Leopoldd", "leopold.mistelberger@gmx.at", "1234", "739821798", "admin");
+  //await login("Leopold", "1234");
+  
+
   console.log(`Server läuft auf Port ${port}`);
 });
 
