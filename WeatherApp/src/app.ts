@@ -17,7 +17,7 @@ app.use('../assets', express.static(path.join(__dirname, 'assets')));
 // Route
 app.get('/', (req, res, next) => {
   if (true) { 
-      res.sendFile('login.html',{root:rootDir});
+      res.sendFile('index.html',{root:rootDir});
     } else {
     next();
   }
@@ -71,7 +71,7 @@ app.listen(port, async () => {
   //await addUsers("Leopold", "leopold.mistelberger@gmx.at", "1234", "739821798", "admin");
   //await login("Leopold", "1234");
 
-  
+
 
   console.log(`Server läuft auf Port ${port}`);
 });

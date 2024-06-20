@@ -28,7 +28,7 @@ app.use('../assets', express_1.default.static(path_1.default.join(__dirname, 'as
 // Route
 app.get('/', (req, res, next) => {
     if (true) {
-        res.sendFile('login.html', { root: rootDir });
+        res.sendFile('index.html', { root: rootDir });
     }
     else {
         next();
@@ -78,7 +78,7 @@ app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, historyservice_1.createHistroyTable)();
     yield (0, userservice_1.createUserTable)();
     //await addUsers("Leopold", "leopold.mistelberger@gmx.at", "1234", "739821798", "admin");
-    yield (0, userservice_1.login)("Leopold", "1234");
+    //await login("Leopold", "1234");
     console.log(`Server läuft auf Port ${port}`);
 }));
 console.log(user_store_1.users);
