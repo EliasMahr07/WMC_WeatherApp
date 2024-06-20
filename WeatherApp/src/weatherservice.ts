@@ -17,6 +17,22 @@ async function addWeatherData(date: string, temperature: number, humidity: numbe
     }
 }
 
+async function deleteAllData() {
+    const db = await open({
+        filename: 'database.db',
+        driver: sqlite3.Database
+    });
+
+    try {
+        await db.run('DELETE FROM weather');
+        console.log('Deleted all weather data successfully.');
+    } catch (error) {
+        console.error('Error deleting weather data:', error);
+    } finally {
+        await db.close();
+    }
+}
+
 async function createDatabase() {
     const db = await open({
         filename: 'database.db',
@@ -53,4 +69,4 @@ async function getWeatherData() {
     }
 }
 
-export { addWeatherData, getWeatherData, createDatabase };
+export { addWeatherData, getWeatherData, createDatabase, deleteAllData };

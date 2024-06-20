@@ -1,6 +1,6 @@
 import express from 'express';
 import { users } from './user-store';
-import {addWeatherData, getWeatherData, createDatabase} from './weatherservice';
+import {addWeatherData, getWeatherData, createDatabase, deleteAllData} from './weatherservice';
 
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
@@ -16,7 +16,6 @@ app.use('../assets', express.static(path.join(__dirname, 'assets')));
 app.get('/', (req, res, next) => {
   if (true) { 
       res.sendFile('login.html',{root:rootDir});
-      console.log("test");
     } else {
     next();
   }
@@ -26,6 +25,25 @@ app.post('/add-weather', async (req, res) => {
   const { date, temperature, humidity, room } = req.body;
   await addWeatherData(date, temperature, humidity, room);
   res.send('Weather data added successfully');
+});
+
+app.get('/get-weather', async (req, res) => {
+  try {
+    const weatherData = await getWeatherData();
+    res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
+  } catch (error) {
+    res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Wetterdaten');
+  }
+});
+
+app.post('/delete-all-data', async (req, res) => {
+  try {
+      await deleteAllData();
+      res.json({ success: true });
+  } catch (error) {
+      console.error('Error deleting weather data:', error);
+      res.json({ success: false });
+  }
 });
 
 app.get('/weather', async (req, res) => {

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createDatabase = exports.getWeatherData = exports.addWeatherData = void 0;
+exports.deleteAllData = exports.createDatabase = exports.getWeatherData = exports.addWeatherData = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const sqlite_1 = require("sqlite");
 function addWeatherData(date, temperature, humidity, room) {
@@ -34,6 +34,25 @@ function addWeatherData(date, temperature, humidity, room) {
     });
 }
 exports.addWeatherData = addWeatherData;
+function deleteAllData() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const db = yield (0, sqlite_1.open)({
+            filename: 'database.db',
+            driver: sqlite3_1.default.Database
+        });
+        try {
+            yield db.run('DELETE FROM weather');
+            console.log('Deleted all weather data successfully.');
+        }
+        catch (error) {
+            console.error('Error deleting weather data:', error);
+        }
+        finally {
+            yield db.close();
+        }
+    });
+}
+exports.deleteAllData = deleteAllData;
 function createDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield (0, sqlite_1.open)({

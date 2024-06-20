@@ -27,7 +27,6 @@ app.use('../assets', express_1.default.static(path_1.default.join(__dirname, 'as
 app.get('/', (req, res, next) => {
     if (true) {
         res.sendFile('login.html', { root: rootDir });
-        console.log("test");
     }
     else {
         next();
@@ -37,6 +36,25 @@ app.post('/add-weather', (req, res) => __awaiter(void 0, void 0, void 0, functio
     const { date, temperature, humidity, room } = req.body;
     yield (0, weatherservice_1.addWeatherData)(date, temperature, humidity, room);
     res.send('Weather data added successfully');
+}));
+app.get('/get-weather', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const weatherData = yield (0, weatherservice_1.getWeatherData)();
+        res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
+    }
+    catch (error) {
+        res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Wetterdaten');
+    }
+}));
+app.post('/delete-all-data', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield (0, weatherservice_1.deleteAllData)();
+        res.json({ success: true });
+    }
+    catch (error) {
+        console.error('Error deleting weather data:', error);
+        res.json({ success: false });
+    }
 }));
 app.get('/weather', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //const weatherData = await getWeatherData();
