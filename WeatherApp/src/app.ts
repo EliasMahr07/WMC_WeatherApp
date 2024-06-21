@@ -3,6 +3,7 @@ import { users } from './user-store';
 import {addWeatherData, getWeatherData, createDatabase, deleteAllData} from './weatherservice';
 import {getHistroy, addHistroy, createHistroyTable} from './historyservice';
 import {getUsers, addUsers, createUserTable, login} from './userservice';
+const dayjs = require('dayjs');
 
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
@@ -25,7 +26,8 @@ app.get('/', (req, res, next) => {
 
 app.post('/add-weather', async (req, res) => {
   const { date, temperature, humidity, room } = req.body;
-  await addWeatherData(date, temperature, humidity, room);
+  const nowDate = dayjs().toISOString();
+  await addWeatherData(nowDate, temperature, humidity, room);
   res.send('Weather data added successfully');
 });
 

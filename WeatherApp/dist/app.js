@@ -17,6 +17,7 @@ const user_store_1 = require("./user-store");
 const weatherservice_1 = require("./weatherservice");
 const historyservice_1 = require("./historyservice");
 const userservice_1 = require("./userservice");
+const dayjs = require('dayjs');
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
 const path_1 = __importDefault(require("path"));
@@ -36,7 +37,8 @@ app.get('/', (req, res, next) => {
 });
 app.post('/add-weather', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { date, temperature, humidity, room } = req.body;
-    yield (0, weatherservice_1.addWeatherData)(date, temperature, humidity, room);
+    const nowDate = dayjs().toISOString();
+    yield (0, weatherservice_1.addWeatherData)(nowDate, temperature, humidity, room);
     res.send('Weather data added successfully');
 }));
 app.get('/get-weather', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
