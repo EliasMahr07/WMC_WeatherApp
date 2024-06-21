@@ -13,6 +13,7 @@ async function openDb() {
 }
 
 async function addUsers(username: string, email: string, password: string, apikey: string, role: String) {
+    console.log("=================ADD=USER=================")
     const db = await openDb();
 
     try {
@@ -35,7 +36,41 @@ async function addUsers(username: string, email: string, password: string, apike
     }
 }
 
+async function deleteUser(username: string){
+    console.log("=================DELETE=USER=================")
+    const db = await openDb();
+    const result = await db.run('DELETE FROM users where username = ?', username);
+    await db.close();
+    
+    if (result.changes != 0) {
+        console.log(`User ${username} deleted successfully`);
+    } 
+    else {
+        console.log(`User ${username} not found`);
+    }
+}
+
+async function changePwd(username:string, newPwd: string){
+    console.log("=================CHANGE=PASSWORD=================")
+    const db = await openDb();
+    const hashedPwd = await bcrypt.hash(newPwd, 10); // Passwort hashen
+
+    const result = await db.run('UPDATE users SET password = ? WHERE username = ?', hashedPwd, username);
+
+    await db.close();
+
+    if (result.changes === 0) {
+        console.log(`User ${username} not found`);
+    }
+    else{
+        console.log(`User ${username} changed pwd to ${newPwd}`);
+    }
+
+
+}
+
 async function login(username: string, password: string){
+    console.log("=================LOGIN=================")
     const db = await openDb();
     const user = await db.get('SELECT password FROM users WHERE username = ?', username);
     await db.close();
@@ -109,7 +144,7 @@ async function getUsers() {
     }
 }
 
-export { getUsers, addUsers, createUserTable, login };
+export { getUsers, addUsers, createUserTable, login, deleteUser, changePwd};
 
 async function main() {
     console.log('penis');
