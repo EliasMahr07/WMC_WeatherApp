@@ -50,6 +50,26 @@ async function deleteUser(username: string){
     }
 }
 
+async function changeRole(username: string, role: string){
+    console.log("=================CHANGE=ROLE=================")
+    const db = await openDb();
+    
+
+
+    const result = await db.run('UPDATE users SET role = ? WHERE username = ?', role, username);
+
+    await db.close();
+
+    if (result.changes === 0) {
+        console.log(`User ${username} role not changed`);
+    }
+    else{
+        console.log(`User ${username} changed role to ${role}`);
+    }
+
+
+}
+
 async function changePwd(username:string, newPwd: string){
     console.log("=================CHANGE=PASSWORD=================")
     const db = await openDb();
