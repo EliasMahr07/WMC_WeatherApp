@@ -3,6 +3,7 @@ import { open } from 'sqlite';
 import bcrypt from 'bcrypt';
 import { resourceUsage } from 'process';
 const dbFilename = "database.db";
+import crypto from 'crypto';
 
 
 async function openDb() {
@@ -12,7 +13,7 @@ async function openDb() {
     });
 }
 
-async function addUsers(username: string, email: string, password: string, apikey: string, role: String) {
+async function addUsers(username: string, email: string, password: string, role: String) {
     console.log("=================ADD=USER=================")
     const db = await openDb();
 
@@ -22,7 +23,8 @@ async function addUsers(username: string, email: string, password: string, apike
             console.log("Username: " + username + "does not exists");
             const hashedPassword = await bcrypt.hash(password, 10);
             console.log("normal: " + password + " hash: "+ hashedPassword);
-            await db.run('INSERT INTO users (username, email, password, apikey, role) VALUES (?, ?, ?, ?, ?)', [username, email, hashedPassword, apikey, role]);
+            const apiKey = generateApiKey();
+            await db.run('INSERT INTO users (username, email, password, apikey, role) VALUES (?, ?, ?, ?, ?)', [username, email, hashedPassword, apiKey, role]);
             console.log('Inserted user sucessfully');
         }
         else{
@@ -53,23 +55,25 @@ async function deleteUser(username: string){
 async function changeRole(username: string, role: string){
     console.log("=================CHANGE=ROLE=================")
 
-    if(role.toLowerCase() != "admin" || role.toLowerCase() != "client"){
-        console.log("no valid role: " + role);
+    if(role.toLowerCase() == "admin" || role.toLowerCase() == "client"){
+
+        const db = await openDb();
+        const result = await db.run('UPDATE users SET role = ? WHERE username = ?', role, username);
+        await db.close();
+
+        if (result.changes === 0) {
+            console.log(`User ${username} role not changed`);
+        }
+        else{
+            console.log(`User ${username} changed role to ${role}`);
+        }
         return;
     }
+    console.log("no valid role: " + role);
+}
 
-    const db = await openDb();
-    const result = await db.run('UPDATE users SET role = ? WHERE username = ?', role, username);
-    await db.close();
-
-    if (result.changes === 0) {
-        console.log(`User ${username} role not changed`);
-    }
-    else{
-        console.log(`User ${username} changed role to ${role}`);
-    }
-
-
+function generateApiKey(): string {
+    return crypto.randomBytes(10).toString('hex'); // Erzeugt einen 64-stelligen Hex-String
 }
 
 async function changePwd(username:string, newPwd: string){

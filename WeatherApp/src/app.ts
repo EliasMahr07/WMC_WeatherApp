@@ -78,11 +78,11 @@ app.listen(port, async () => {
   await createDatabase();
   await createHistroyTable();
   await createUserTable();
-  //await addUsers("Leopoldd", "leopold.mistelberger@gmx.at", "1234", "739821798", "admin");
+  await deleteUser("Leopoldd");
+  //await addUsers("testapi", "leopold.mistelberger@gmx.at", "1234", "admin");
   //await login("Leopold", "1234");
-  //await deleteUser("Leopold");
   //await changePwd("Leopoldd", "12345");
-  await changeRole("Leopoldd", "client");
+  //await changeRole("Leopolddd", "client");
 
   console.log(`Server läuft auf Port ${port}`);
 });

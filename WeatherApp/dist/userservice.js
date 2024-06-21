@@ -17,6 +17,7 @@ const sqlite3_1 = __importDefault(require("sqlite3"));
 const sqlite_1 = require("sqlite");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dbFilename = "database.db";
+const crypto_1 = __importDefault(require("crypto"));
 function openDb() {
     return __awaiter(this, void 0, void 0, function* () {
         return (0, sqlite_1.open)({
@@ -25,7 +26,7 @@ function openDb() {
         });
     });
 }
-function addUsers(username, email, password, apikey, role) {
+function addUsers(username, email, password, role) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("=================ADD=USER=================");
         const db = yield openDb();
@@ -34,7 +35,8 @@ function addUsers(username, email, password, apikey, role) {
                 console.log("Username: " + username + "does not exists");
                 const hashedPassword = yield bcrypt_1.default.hash(password, 10);
                 console.log("normal: " + password + " hash: " + hashedPassword);
-                yield db.run('INSERT INTO users (username, email, password, apikey, role) VALUES (?, ?, ?, ?, ?)', [username, email, hashedPassword, apikey, role]);
+                const apiKey = generateApiKey();
+                yield db.run('INSERT INTO users (username, email, password, apikey, role) VALUES (?, ?, ?, ?, ?)', [username, email, hashedPassword, apiKey, role]);
                 console.log('Inserted user sucessfully');
             }
             else {
@@ -68,18 +70,25 @@ exports.deleteUser = deleteUser;
 function changeRole(username, role) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("=================CHANGE=ROLE=================");
-        const db = yield openDb();
-        const result = yield db.run('UPDATE users SET role = ? WHERE username = ?', role, username);
-        yield db.close();
-        if (result.changes === 0) {
-            console.log(`User ${username} role not changed`);
+        if (role.toLowerCase() == "admin" || role.toLowerCase() == "client") {
+            const db = yield openDb();
+            const result = yield db.run('UPDATE users SET role = ? WHERE username = ?', role, username);
+            yield db.close();
+            if (result.changes === 0) {
+                console.log(`User ${username} role not changed`);
+            }
+            else {
+                console.log(`User ${username} changed role to ${role}`);
+            }
+            return;
         }
-        else {
-            console.log(`User ${username} changed role to ${role}`);
-        }
+        console.log("no valid role: " + role);
     });
 }
 exports.changeRole = changeRole;
+function generateApiKey() {
+    return crypto_1.default.randomBytes(10).toString('hex'); // Erzeugt einen 64-stelligen Hex-String
+}
 function changePwd(username, newPwd) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("=================CHANGE=PASSWORD=================");
