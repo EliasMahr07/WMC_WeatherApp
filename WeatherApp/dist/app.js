@@ -88,10 +88,11 @@ app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, weatherservice_1.createDatabase)();
     yield (0, historyservice_1.createHistroyTable)();
     yield (0, userservice_1.createUserTable)();
-    yield (0, userservice_1.addUsers)("Leopoldd", "leopold.mistelberger@gmx.at", "1234", "739821798", "admin");
+    //await addUsers("Leopoldd", "leopold.mistelberger@gmx.at", "1234", "739821798", "admin");
     //await login("Leopold", "1234");
     //await deleteUser("Leopold");
-    yield (0, userservice_1.changePwd)("Leopoldd", "12345");
+    //await changePwd("Leopoldd", "12345");
+    yield (0, userservice_1.changeRole)("Leopoldd", "client");
     console.log(`Server läuft auf Port ${port}`);
 }));
 console.log(user_store_1.users);

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changePwd = exports.deleteUser = exports.login = exports.createUserTable = exports.addUsers = exports.getUsers = void 0;
+exports.changeRole = exports.changePwd = exports.deleteUser = exports.login = exports.createUserTable = exports.addUsers = exports.getUsers = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const sqlite_1 = require("sqlite");
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -65,6 +65,21 @@ function deleteUser(username) {
     });
 }
 exports.deleteUser = deleteUser;
+function changeRole(username, role) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=================CHANGE=ROLE=================");
+        const db = yield openDb();
+        const result = yield db.run('UPDATE users SET role = ? WHERE username = ?', role, username);
+        yield db.close();
+        if (result.changes === 0) {
+            console.log(`User ${username} role not changed`);
+        }
+        else {
+            console.log(`User ${username} changed role to ${role}`);
+        }
+    });
+}
+exports.changeRole = changeRole;
 function changePwd(username, newPwd) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("=================CHANGE=PASSWORD=================");

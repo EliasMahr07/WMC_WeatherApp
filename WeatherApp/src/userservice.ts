@@ -52,12 +52,14 @@ async function deleteUser(username: string){
 
 async function changeRole(username: string, role: string){
     console.log("=================CHANGE=ROLE=================")
+
+    if(role.toLowerCase() != "admin" || role.toLowerCase() != "client"){
+        console.log("no valid role: " + role);
+        return;
+    }
+
     const db = await openDb();
-    
-
-
     const result = await db.run('UPDATE users SET role = ? WHERE username = ?', role, username);
-
     await db.close();
 
     if (result.changes === 0) {
@@ -164,7 +166,7 @@ async function getUsers() {
     }
 }
 
-export { getUsers, addUsers, createUserTable, login, deleteUser, changePwd};
+export { getUsers, addUsers, createUserTable, login, deleteUser, changePwd, changeRole};
 
 async function main() {
     console.log('penis');
