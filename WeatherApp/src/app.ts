@@ -39,6 +39,14 @@ app.get('/get-weather', async (req, res) => {
     res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Wetterdaten');
   }
 });
+app.get('/get-getUser', async (req, res) => {
+  try {
+    const weatherData = await getUsers();
+    res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
+  } catch (error) {
+    res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der User');
+  }
+});
 
 app.post('/delete-all-data', async (req, res) => {
   try {

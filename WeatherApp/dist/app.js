@@ -50,6 +50,15 @@ app.get('/get-weather', (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Wetterdaten');
     }
 }));
+app.get('/get-getUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const weatherData = yield (0, userservice_1.getUsers)();
+        res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
+    }
+    catch (error) {
+        res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der User');
+    }
+}));
 app.post('/delete-all-data', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, weatherservice_1.deleteAllData)();
