@@ -8,6 +8,7 @@ import { addCity, getCitys } from './weatherworldservice';
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
 import path from 'path';
+import { addStorm, getStorm } from './stormsservice';
 
 const app = express();
 __dirname = path.resolve();
@@ -60,6 +61,17 @@ app.get('/get-getCitys', async (req, res) => {
     res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
   } catch (error) {
     res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Städte');
+  }
+});
+
+
+app.get('/get-getStorm', async (req, res) => {
+  try {
+    const {stormname} = req.body;
+    const weatherData = await getStorm(stormname);
+    res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
+  } catch (error) {
+    res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Storms');
   }
 });
 

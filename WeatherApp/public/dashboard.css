@@ -175,13 +175,14 @@
 }
 .cloud-back{
   background-image: url("cloudy.png");
- background-position-x: center;
+ background-position-x: 60%;
+ background-position-y: 12%;
   background-repeat: no-repeat;
 }
 .sun-back{
   background-image: url("sun.png");
-  background-position-y: 15% ;
-  background-position-x: 60%;
+  background-position-y: 30% ;
+  background-position-x: 67%;
    background-repeat: no-repeat;
 }
 .season-back{

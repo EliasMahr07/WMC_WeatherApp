@@ -22,6 +22,7 @@ const weatherworldservice_1 = require("./weatherworldservice");
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
 const path_1 = __importDefault(require("path"));
+const stormsservice_1 = require("./stormsservice");
 const app = (0, express_1.default)();
 __dirname = path_1.default.resolve();
 const rootDir = path_1.default.join(__dirname, "./public");
@@ -73,6 +74,16 @@ app.get('/get-getCitys', (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     catch (error) {
         res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Städte');
+    }
+}));
+app.get('/get-getStorm', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { stormname } = req.body;
+        const weatherData = yield (0, stormsservice_1.getStorm)(stormname);
+        res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
+    }
+    catch (error) {
+        res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Storms');
     }
 }));
 app.post('/delete-all-data', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
