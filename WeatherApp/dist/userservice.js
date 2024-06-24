@@ -12,11 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.createUserTable = exports.addUsers = exports.getUsers = void 0;
+exports.changeRole = exports.changePwd = exports.deleteUser = exports.login = exports.createUserTable = exports.addUsers = exports.getUsers = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const sqlite_1 = require("sqlite");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dbFilename = "database.db";
+const crypto_1 = __importDefault(require("crypto"));
 function openDb() {
     return __awaiter(this, void 0, void 0, function* () {
         return (0, sqlite_1.open)({
@@ -25,15 +26,17 @@ function openDb() {
         });
     });
 }
-function addUsers(username, email, password, apikey, role) {
+function addUsers(username, email, password, role) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("=================ADD=USER=================");
         const db = yield openDb();
         try {
             if ((yield doesUserExists(username)) == false) {
                 console.log("Username: " + username + "does not exists");
                 const hashedPassword = yield bcrypt_1.default.hash(password, 10);
                 console.log("normal: " + password + " hash: " + hashedPassword);
-                yield db.run('INSERT INTO users (username, email, password, apikey, role) VALUES (?, ?, ?, ?, ?)', [username, email, hashedPassword, apikey, role]);
+                const apiKey = generateApiKey();
+                yield db.run('INSERT INTO users (username, email, password, apikey, role) VALUES (?, ?, ?, ?, ?)', [username, email, hashedPassword, apiKey, role]);
                 console.log('Inserted user sucessfully');
             }
             else {
@@ -49,8 +52,62 @@ function addUsers(username, email, password, apikey, role) {
     });
 }
 exports.addUsers = addUsers;
+function deleteUser(username) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=================DELETE=USER=================");
+        const db = yield openDb();
+        const result = yield db.run('DELETE FROM users where username = ?', username);
+        yield db.close();
+        if (result.changes != 0) {
+            console.log(`User ${username} deleted successfully`);
+        }
+        else {
+            console.log(`User ${username} not found`);
+        }
+    });
+}
+exports.deleteUser = deleteUser;
+function changeRole(username, role) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=================CHANGE=ROLE=================");
+        if (role.toLowerCase() == "admin" || role.toLowerCase() == "client") {
+            const db = yield openDb();
+            const result = yield db.run('UPDATE users SET role = ? WHERE username = ?', role, username);
+            yield db.close();
+            if (result.changes === 0) {
+                console.log(`User ${username} role not changed`);
+            }
+            else {
+                console.log(`User ${username} changed role to ${role}`);
+            }
+            return;
+        }
+        console.log("no valid role: " + role);
+    });
+}
+exports.changeRole = changeRole;
+function generateApiKey() {
+    return crypto_1.default.randomBytes(10).toString('hex'); // Erzeugt einen 64-stelligen Hex-String
+}
+function changePwd(username, newPwd) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=================CHANGE=PASSWORD=================");
+        const db = yield openDb();
+        const hashedPwd = yield bcrypt_1.default.hash(newPwd, 10); // Passwort hashen
+        const result = yield db.run('UPDATE users SET password = ? WHERE username = ?', hashedPwd, username);
+        yield db.close();
+        if (result.changes === 0) {
+            console.log(`User ${username} not found`);
+        }
+        else {
+            console.log(`User ${username} changed pwd to ${newPwd}`);
+        }
+    });
+}
+exports.changePwd = changePwd;
 function login(username, password) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("=================LOGIN=================");
         const db = yield openDb();
         const user = yield db.get('SELECT password FROM users WHERE username = ?', username);
         yield db.close();

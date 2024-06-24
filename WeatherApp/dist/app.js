@@ -17,6 +17,7 @@ const user_store_1 = require("./user-store");
 const weatherservice_1 = require("./weatherservice");
 const historyservice_1 = require("./historyservice");
 const userservice_1 = require("./userservice");
+const dayjs = require('dayjs');
 const weatherworldservice_1 = require("./weatherworldservice");
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
@@ -37,7 +38,8 @@ app.get('/', (req, res, next) => {
 });
 app.post('/add-weather', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { date, temperature, humidity, room } = req.body;
-    yield (0, weatherservice_1.addWeatherData)(date, temperature, humidity, room);
+    const nowDate = dayjs().toISOString();
+    yield (0, weatherservice_1.addWeatherData)(nowDate, temperature, humidity, room);
     res.send('Weather data added successfully');
 }));
 app.get('/get-weather', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -102,8 +104,11 @@ app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, weatherservice_1.createDatabase)();
     yield (0, historyservice_1.createHistroyTable)();
     yield (0, userservice_1.createUserTable)();
-    //await addUsers("Leopoldd", "leopold.mistelberger@gmx.at", "1234", "739821798", "admin");
+    yield (0, userservice_1.deleteUser)("Leopoldd");
+    //await addUsers("testapi", "leopold.mistelberger@gmx.at", "1234", "admin");
     //await login("Leopold", "1234");
+    //await changePwd("Leopoldd", "12345");
+    //await changeRole("Leopolddd", "client");
     console.log(`Server läuft auf Port ${port}`);
 }));
 console.log(user_store_1.users);

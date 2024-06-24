@@ -2,7 +2,8 @@ import express from 'express';
 import { users } from './user-store';
 import {addWeatherData, getWeatherData, createDatabase, deleteAllData} from './weatherservice';
 import {getHistroy, addHistroy, createHistroyTable} from './historyservice';
-import {getUsers, addUsers, createUserTable, login} from './userservice';
+import {getUsers, addUsers, createUserTable, login, deleteUser, changePwd, changeRole} from './userservice';
+const dayjs = require('dayjs');
 import { addCity, getCitys } from './weatherworldservice';
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
@@ -25,7 +26,8 @@ app.get('/', (req, res, next) => {
 
 app.post('/add-weather', async (req, res) => {
   const { date, temperature, humidity, room } = req.body;
-  await addWeatherData(date, temperature, humidity, room);
+  const nowDate = dayjs().toISOString();
+  await addWeatherData(nowDate, temperature, humidity, room);
   res.send('Weather data added successfully');
 });
 
@@ -91,9 +93,11 @@ app.listen(port, async () => {
   await createDatabase();
   await createHistroyTable();
   await createUserTable();
-  //await addUsers("Leopoldd", "leopold.mistelberger@gmx.at", "1234", "739821798", "admin");
+  await deleteUser("Leopoldd");
+  //await addUsers("testapi", "leopold.mistelberger@gmx.at", "1234", "admin");
   //await login("Leopold", "1234");
-  
+  //await changePwd("Leopoldd", "12345");
+  //await changeRole("Leopolddd", "client");
 
   console.log(`Server läuft auf Port ${port}`);
 });

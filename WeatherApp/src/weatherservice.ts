@@ -1,7 +1,7 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 
-async function addWeatherData(date: string, temperature: number, humidity: number, room: string) {
+async function addWeatherData(date: number, temperature: number, humidity: number, room: string) {
     const db = await open({
         filename: 'database.db',
         driver: sqlite3.Database

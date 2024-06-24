@@ -3,6 +3,7 @@ import { open } from 'sqlite';
 import bcrypt from 'bcrypt';
 import { resourceUsage } from 'process';
 const dbFilename = "database.db";
+import crypto from 'crypto';
 
 
 async function openDb() {
@@ -12,7 +13,8 @@ async function openDb() {
     });
 }
 
-async function addUsers(username: string, email: string, password: string, apikey: string, role: String) {
+async function addUsers(username: string, email: string, password: string, role: String) {
+    console.log("=================ADD=USER=================")
     const db = await openDb();
 
     try {
@@ -21,7 +23,8 @@ async function addUsers(username: string, email: string, password: string, apike
             console.log("Username: " + username + "does not exists");
             const hashedPassword = await bcrypt.hash(password, 10);
             console.log("normal: " + password + " hash: "+ hashedPassword);
-            await db.run('INSERT INTO users (username, email, password, apikey, role) VALUES (?, ?, ?, ?, ?)', [username, email, hashedPassword, apikey, role]);
+            const apiKey = generateApiKey();
+            await db.run('INSERT INTO users (username, email, password, apikey, role) VALUES (?, ?, ?, ?, ?)', [username, email, hashedPassword, apiKey, role]);
             console.log('Inserted user sucessfully');
         }
         else{
@@ -35,7 +38,65 @@ async function addUsers(username: string, email: string, password: string, apike
     }
 }
 
+async function deleteUser(username: string){
+    console.log("=================DELETE=USER=================")
+    const db = await openDb();
+    const result = await db.run('DELETE FROM users where username = ?', username);
+    await db.close();
+    
+    if (result.changes != 0) {
+        console.log(`User ${username} deleted successfully`);
+    } 
+    else {
+        console.log(`User ${username} not found`);
+    }
+}
+
+async function changeRole(username: string, role: string){
+    console.log("=================CHANGE=ROLE=================")
+
+    if(role.toLowerCase() == "admin" || role.toLowerCase() == "client"){
+
+        const db = await openDb();
+        const result = await db.run('UPDATE users SET role = ? WHERE username = ?', role, username);
+        await db.close();
+
+        if (result.changes === 0) {
+            console.log(`User ${username} role not changed`);
+        }
+        else{
+            console.log(`User ${username} changed role to ${role}`);
+        }
+        return;
+    }
+    console.log("no valid role: " + role);
+}
+
+function generateApiKey(): string {
+    return crypto.randomBytes(10).toString('hex'); // Erzeugt einen 64-stelligen Hex-String
+}
+
+async function changePwd(username:string, newPwd: string){
+    console.log("=================CHANGE=PASSWORD=================")
+    const db = await openDb();
+    const hashedPwd = await bcrypt.hash(newPwd, 10); // Passwort hashen
+
+    const result = await db.run('UPDATE users SET password = ? WHERE username = ?', hashedPwd, username);
+
+    await db.close();
+
+    if (result.changes === 0) {
+        console.log(`User ${username} not found`);
+    }
+    else{
+        console.log(`User ${username} changed pwd to ${newPwd}`);
+    }
+
+
+}
+
 async function login(username: string, password: string){
+    console.log("=================LOGIN=================")
     const db = await openDb();
     const user = await db.get('SELECT password FROM users WHERE username = ?', username);
     await db.close();
@@ -109,7 +170,7 @@ async function getUsers() {
     }
 }
 
-export { getUsers, addUsers, createUserTable, login };
+export { getUsers, addUsers, createUserTable, login, deleteUser, changePwd, changeRole};
 
 async function main() {
     let tmp = 
