@@ -17,6 +17,7 @@ const user_store_1 = require("./user-store");
 const weatherservice_1 = require("./weatherservice");
 const historyservice_1 = require("./historyservice");
 const userservice_1 = require("./userservice");
+const weatherworldservice_1 = require("./weatherworldservice");
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
 const path_1 = __importDefault(require("path"));
@@ -55,6 +56,21 @@ app.get('/get-getUser', (req, res) => __awaiter(void 0, void 0, void 0, function
     }
     catch (error) {
         res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der User');
+    }
+}));
+app.post('/add-city', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userid, city } = req.body;
+    yield (0, weatherworldservice_1.addCity)(userid, city);
+    res.send('City data added successfully');
+}));
+app.get('/get-getCitys', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userid } = req.body;
+        const weatherData = yield (0, weatherworldservice_1.getCitys)(userid);
+        res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
+    }
+    catch (error) {
+        res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Städte');
     }
 }));
 app.post('/delete-all-data', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

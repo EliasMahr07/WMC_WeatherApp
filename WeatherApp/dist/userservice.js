@@ -129,7 +129,6 @@ function getUsers() {
 exports.getUsers = getUsers;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('penis');
         let tmp = getUsers();
         console.log(tmp);
     });

@@ -3,7 +3,7 @@ import { users } from './user-store';
 import {addWeatherData, getWeatherData, createDatabase, deleteAllData} from './weatherservice';
 import {getHistroy, addHistroy, createHistroyTable} from './historyservice';
 import {getUsers, addUsers, createUserTable, login} from './userservice';
-
+import { addCity, getCitys } from './weatherworldservice';
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
 import path from 'path';
@@ -43,6 +43,21 @@ app.get('/get-getUser', async (req, res) => {
     res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
   } catch (error) {
     res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der User');
+  }
+});
+
+app.post('/add-city', async (req, res) => {
+  const { userid, city } = req.body;
+  await addCity(userid, city);
+  res.send('City data added successfully');
+});
+app.get('/get-getCitys', async (req, res) => {
+  try {
+    const {userid} = req.body;
+    const weatherData = await getCitys(userid);
+    res.json(weatherData); // Sendet die Wetterdaten als JSON zurück
+  } catch (error) {
+    res.status(500).send('Ein Fehler ist aufgetreten beim Abrufen der Städte');
   }
 });
 

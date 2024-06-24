@@ -112,7 +112,6 @@ async function getUsers() {
 export { getUsers, addUsers, createUserTable, login };
 
 async function main() {
-    console.log('penis');
     let tmp = 
     getUsers();
     console.log(tmp);
