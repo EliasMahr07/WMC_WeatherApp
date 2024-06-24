@@ -21,13 +21,10 @@ const weatherworldservice_1 = require("./weatherworldservice");
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
 const path_1 = __importDefault(require("path"));
-<<<<<<< HEAD
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const auth_router_1 = require("./auth-router");
 const SECRET_KEY = "secrete_key";
-=======
 const stormsservice_1 = require("./stormsservice");
->>>>>>> df168da942183263e439d574b79a0239c48c6738
 const app = (0, express_1.default)();
 __dirname = path_1.default.resolve();
 const rootDir = path_1.default.join(__dirname, "./public");

@@ -7,15 +7,12 @@ import { addCity, getCitys } from './weatherworldservice';
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
 import path from 'path';
-<<<<<<< HEAD
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 import { authRouter } from './auth-router';
 const SECRET_KEY = "secrete_key";
 
-=======
 import { addStorm, getStorm } from './stormsservice';
->>>>>>> df168da942183263e439d574b79a0239c48c6738
 
 const app = express();
 __dirname = path.resolve();

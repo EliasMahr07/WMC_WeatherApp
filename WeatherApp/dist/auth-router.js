@@ -10,6 +10,7 @@ const user_store_1 = require("./user-store");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const auth_handler_1 = require("./auth-handler");
+const userservice_1 = require("./userservice");
 require('dotenv').config();
 const SECRET_KEY = process.env.SECRET_KEY;
 exports.authRouter = express_1.default.Router();
@@ -24,7 +25,10 @@ exports.authRouter.post("/login", (request, response) => {
     const loginUser = request.body;
     console.log(request.body);
     console.log(loginUser);
-    const user = user_store_1.getUsers.find((u) => u.email === loginUser.email);
+    //const user = getUsers.find((u) => u.email === loginUser.email);
+    const logedIn = (0, userservice_1.login)(loginUser.username, loginUser.password);
+    if (logedIn) {
+    }
     if (user === undefined) {
         response.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).json("User does not exist");
         return;

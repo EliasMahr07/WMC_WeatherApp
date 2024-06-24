@@ -33,8 +33,15 @@ authRouter.post("/login", (request, response) => {
     //const user = getUsers.find((u) => u.email === loginUser.email);
     const logedIn =  login(loginUser.username, loginUser.password);
 
-    
-
+    logedIn.then((isLoggedIn) => {
+        if (isLoggedIn) {
+            
+        } else {
+            
+        }
+      }).catch((error) => {
+        console.error("Error occurred while checking login status:", error);
+      });
 
     if (user === undefined) {
         response.status(StatusCodes.UNAUTHORIZED).json("User does not exist");
