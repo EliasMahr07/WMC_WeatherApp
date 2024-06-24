@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const saltRounds = 8;
+const saltRounds = 10;
 function login() {
     const userInput = document.getElementById("user");
     const passwordInput = document.getElementById("password");

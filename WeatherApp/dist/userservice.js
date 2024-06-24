@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changeRole = exports.changePwd = exports.deleteUser = exports.login = exports.createUserTable = exports.addUsers = exports.getUsers = void 0;
+exports.changeRole = exports.changePwd = exports.deleteUser = exports.login = exports.createUserTable = exports.addUser = exports.getUsers = exports.createUser = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const sqlite_1 = require("sqlite");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dbFilename = "database.db";
 const crypto_1 = __importDefault(require("crypto"));
+const http_status_codes_1 = require("http-status-codes");
 function openDb() {
     return __awaiter(this, void 0, void 0, function* () {
         return (0, sqlite_1.open)({
@@ -26,7 +27,33 @@ function openDb() {
         });
     });
 }
-function addUsers(username, email, password, role) {
+function createUser(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const user = req.body;
+        try {
+            const db = yield openDb();
+            const stmt = yield db.prepare("INSERT INTO Users (username, email, password, apikey, role) VALUES (?1, ?2, ?3, ?4, 5?)");
+            yield stmt.bind({
+                1: user.username,
+                2: user.email,
+                3: bcrypt_1.default.hashSync(user.password, saltRounds),
+                4: user.apiKey,
+                5: user.role
+            });
+            yield stmt.run();
+            yield stmt.finalize();
+            yield db.close();
+            console.log(yield getUsers());
+            res.status(http_status_codes_1.StatusCodes.OK).send("User created successfully");
+        }
+        catch (error) {
+            console.error("Error creating user:", error);
+            res.status(500).send("Internal Server Error");
+        }
+    });
+}
+exports.createUser = createUser;
+function addUser(username, email, password, role) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("=================ADD=USER=================");
         const db = yield openDb();
@@ -51,7 +78,7 @@ function addUsers(username, email, password, role) {
         }
     });
 }
-exports.addUsers = addUsers;
+exports.addUser = addUser;
 function deleteUser(username) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("=================DELETE=USER=================");
@@ -116,6 +143,7 @@ function login(username, password) {
         if (user) {
             const isPasswordCorrect = yield bcrypt_1.default.compare(password, user.password);
             console.log("is password correct: " + isPasswordCorrect);
+            return true;
         }
         else {
             console.log("password is incorrect");
@@ -163,23 +191,15 @@ function createUserTable() {
 exports.createUserTable = createUserTable;
 function getUsers() {
     return __awaiter(this, void 0, void 0, function* () {
-        const db = yield openDb();
-        console.log("getUsers");
-        let tmp = "";
         try {
-            const users = yield db.all('SELECT * FROM users');
-            users.forEach(user => {
-                tmp = user.username + " " + user.email + " " + user.password + " " + user.role + " " + user.apikey;
-            });
-            console.log("users: " + users);
+            const db = yield openDb();
+            const users = yield db.all("SELECT * FROM User");
+            yield db.close();
             return users;
         }
         catch (error) {
-            console.error('Error retrieving users:', error);
-            return [];
-        }
-        finally {
-            yield db.close();
+            console.error("Error fetching users:", error);
+            throw error;
         }
     });
 }

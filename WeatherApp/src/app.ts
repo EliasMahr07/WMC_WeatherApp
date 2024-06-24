@@ -1,20 +1,42 @@
 import express from 'express';
-import { users } from './user-store';
 import {addWeatherData, getWeatherData, createDatabase, deleteAllData} from './weatherservice';
 import {getHistroy, addHistroy, createHistroyTable} from './historyservice';
-import {getUsers, addUsers, createUserTable, login, deleteUser, changePwd, changeRole} from './userservice';
+import {getUsers, createUser, createUserTable, login, deleteUser, changePwd, changeRole} from './userservice';
 const dayjs = require('dayjs');
 import { addCity, getCitys } from './weatherworldservice';
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
 import path from 'path';
+import bodyParser from 'body-parser';
+import jwt from 'jsonwebtoken';
+import { authRouter } from './auth-router';
+const SECRET_KEY = "secrete_key";
+
 
 const app = express();
 __dirname = path.resolve();
 const rootDir = path.join(__dirname,"./public");
 app.use(express.json());
 
+
+app.post("/api/register", createUser);
+app.use("/api/auth", authRouter);
+
 app.use('../assets', express.static(path.join(__dirname, 'assets')));
+
+
+
+app.post('/api/auth/token', (req, res) => {
+  const { secretKey } = req.body;
+
+  if (secretKey === "YOUR_SECRET_KEY") {
+    const token = jwt.sign({ userId: 1 }, SECRET_KEY, { expiresIn: '1h' });
+    res.json({ token });
+  } else {
+    res.status(401).json({ message: 'Unauthorized' });
+  }
+});
+
 // Route
 app.get('/', (req, res, next) => {
   if (true) { 
@@ -101,5 +123,3 @@ app.listen(port, async () => {
 
   console.log(`Server läuft auf Port ${port}`);
 });
-
-console.log(users);

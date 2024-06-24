@@ -1,4 +1,4 @@
-const saltRounds: number = 8;
+const saltRounds: number = 10;
 
 function login(): void {
     const userInput: HTMLInputElement = document.getElementById("user") as HTMLInputElement;

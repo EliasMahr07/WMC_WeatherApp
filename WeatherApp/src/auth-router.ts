@@ -1,10 +1,11 @@
-/*
 import express from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { users } from './user-store';
+
+import { getUsers } from "./user-store";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { isAuthenticated, isAdmin } from './auth-handler';
+import { login} from './userservice'
 
 require('dotenv').config();
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -13,6 +14,7 @@ export const authRouter = express.Router();
 export interface UserCredentials {
     email: string;
     password: string;
+    username: string;
 }
 
 authRouter.use((req, res, next) => {
@@ -21,14 +23,18 @@ authRouter.use((req, res, next) => {
 });
 
 authRouter.get("/users", isAuthenticated, isAdmin, (request, response) => {
-    response.status(StatusCodes.OK).json(users);
+    response.status(StatusCodes.OK).json(getUsers());
 });
 
 authRouter.post("/login", (request, response) => {
     const loginUser: UserCredentials = request.body;
     console.log(request.body)
     console.log(loginUser)
-    const user = users.find((u) => u.email === loginUser.email);
+    //const user = getUsers.find((u) => u.email === loginUser.email);
+    const logedIn =  login(loginUser.username, loginUser.password);
+
+    
+
 
     if (user === undefined) {
         response.status(StatusCodes.UNAUTHORIZED).json("User does not exist");
@@ -42,6 +48,7 @@ authRouter.post("/login", (request, response) => {
     const userClaims = {
         email: user.email,
         role: user.role,
+        password: user.password
     };
     const expiresAt = new Date(Date.now() + 30 * 60000);
     const token = jwt.sign(
@@ -50,6 +57,5 @@ authRouter.post("/login", (request, response) => {
             exp: expiresAt.getTime() / 1000,
         },
         SECRET_KEY || '1234', // Use an empty string as the default value if SECRET_KEY is undefined
-    );
+    );  
 });
-*/

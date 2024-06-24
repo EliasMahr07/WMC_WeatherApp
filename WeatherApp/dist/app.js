@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const user_store_1 = require("./user-store");
 const weatherservice_1 = require("./weatherservice");
 const historyservice_1 = require("./historyservice");
 const userservice_1 = require("./userservice");
@@ -22,11 +21,26 @@ const weatherworldservice_1 = require("./weatherworldservice");
 //import { authRouter } from './auth-router';
 //import { isAdmin, isAuthenticated } from './auth-handler';
 const path_1 = __importDefault(require("path"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const auth_router_1 = require("./auth-router");
+const SECRET_KEY = "secrete_key";
 const app = (0, express_1.default)();
 __dirname = path_1.default.resolve();
 const rootDir = path_1.default.join(__dirname, "./public");
 app.use(express_1.default.json());
+app.post("/api/register", userservice_1.createUser);
+app.use("/api/auth", auth_router_1.authRouter);
 app.use('../assets', express_1.default.static(path_1.default.join(__dirname, 'assets')));
+app.post('/api/auth/token', (req, res) => {
+    const { secretKey } = req.body;
+    if (secretKey === "YOUR_SECRET_KEY") {
+        const token = jsonwebtoken_1.default.sign({ userId: 1 }, SECRET_KEY, { expiresIn: '1h' });
+        res.json({ token });
+    }
+    else {
+        res.status(401).json({ message: 'Unauthorized' });
+    }
+});
 // Route
 app.get('/', (req, res, next) => {
     if (true) {
@@ -111,4 +125,3 @@ app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
     //await changeRole("Leopolddd", "client");
     console.log(`Server läuft auf Port ${port}`);
 }));
-console.log(user_store_1.users);

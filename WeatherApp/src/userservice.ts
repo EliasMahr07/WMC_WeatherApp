@@ -4,7 +4,17 @@ import bcrypt from 'bcrypt';
 import { resourceUsage } from 'process';
 const dbFilename = "database.db";
 import crypto from 'crypto';
+import express from "express";
+import { StatusCodes } from "http-status-codes";
 
+export interface User {
+    email: string;
+    password: string;
+    username: string;
+    role: string;
+    apiKey: string;
+    id: number;
+  }
 
 async function openDb() {
     return open({
@@ -13,7 +23,38 @@ async function openDb() {
     });
 }
 
-async function addUsers(username: string, email: string, password: string, role: String) {
+export async function createUser(
+    req: express.Request,
+    res: express.Response
+  ): Promise<void> {
+    const user: User = req.body;
+  
+    try {
+      const db = await openDb();
+      const stmt = await db.prepare(
+        "INSERT INTO Users (username, email, password, apikey, role) VALUES (?1, ?2, ?3, ?4, 5?)"
+      );
+      await stmt.bind({
+        1: user.username,
+        2: user.email,
+        3: bcrypt.hashSync(user.password, saltRounds),
+        4: user.apiKey,
+        5: user.role
+      });
+      await stmt.run();
+      await stmt.finalize();
+      await db.close();
+      console.log(await getUsers());
+      res.status(StatusCodes.OK).send("User created successfully");
+    } catch (error) {
+      console.error("Error creating user:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+  
+
+
+async function addUser(username: string, email: string, password: string, role: String) {
     console.log("=================ADD=USER=================")
     const db = await openDb();
 
@@ -95,7 +136,7 @@ async function changePwd(username:string, newPwd: string){
 
 }
 
-async function login(username: string, password: string){
+async function login(username: string, password: string) :Promise<boolean> {
     console.log("=================LOGIN=================")
     const db = await openDb();
     const user = await db.get('SELECT password FROM users WHERE username = ?', username);
@@ -105,6 +146,7 @@ async function login(username: string, password: string){
     if (user) {
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         console.log("is password correct: " + isPasswordCorrect);
+        return true;
     } else {
         console.log("password is incorrect");
         return false;
@@ -148,33 +190,23 @@ async function createUserTable() {
     await db.close();
 }
 
-async function getUsers() {
-    const db = await openDb();
-    console.log("getUsers");
-    let tmp = "";
-
-
+async function getUsers(): Promise<User[]> {
     try {
-        const users = await db.all('SELECT * FROM users');
-        users.forEach(user => {
-            tmp = user.username + " " + user.email + " " + user.password + " " + user.role + " " + user.apikey;
-            
-        });
-        console.log("users: "+ users);
-        return users;
+      const db = await openDb();
+      const users = await db.all<User[]>("SELECT * FROM User");
+    
+      await db.close();
+      return users;
     } catch (error) {
-        console.error('Error retrieving users:', error);
-        return [];
-    } finally {
-        await db.close();
+      console.error("Error fetching users:", error);
+      throw error;
     }
 }
 
-export { getUsers, addUsers, createUserTable, login, deleteUser, changePwd, changeRole};
+export { getUsers, addUser, createUserTable, login, deleteUser, changePwd, changeRole};
 
 async function main() {
-    let tmp = 
-    getUsers();
+    let tmp = getUsers();
     console.log(tmp);
 }
 
