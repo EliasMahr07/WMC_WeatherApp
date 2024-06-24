@@ -24,7 +24,7 @@ function openDb() {
         });
     });
 }
-function addCity(city, userId) {
+function addCity(userId, city) {
     return __awaiter(this, void 0, void 0, function* () {
         const db = yield openDb();
         try {
@@ -75,7 +75,7 @@ function getCitys(userId2) {
 exports.getCitys = getCitys;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        addCity("Wien", 1);
+        addCity(1, "Wien");
         console.log(yield getCitys(1));
     });
 }
