@@ -36,7 +36,7 @@ app.get('/', (req, res, next) => {
     }
 });
 app.post('/add-weather', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { date, temperature, humidity, room } = req.body;
+    const { temperature, humidity, room } = req.body;
     const nowDate = dayjs().toISOString();
     yield (0, weatherservice_1.addWeatherData)(nowDate, temperature, humidity, room);
     res.send('Weather data added successfully');

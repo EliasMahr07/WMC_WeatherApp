@@ -25,7 +25,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.post('/add-weather', async (req, res) => {
-  const { date, temperature, humidity, room } = req.body;
+  const { temperature, humidity, room } = req.body;
   const nowDate = dayjs().toISOString();
   await addWeatherData(nowDate, temperature, humidity, room);
   res.send('Weather data added successfully');
