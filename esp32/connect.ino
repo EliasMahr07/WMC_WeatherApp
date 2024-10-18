@@ -2,7 +2,7 @@
 #include <PubSubClient.h>
 
 // WiFi
-const char *ssid = "xxxxx"; // Enter your WiFi name
+const char *ssid = "ZTE_067163"; // Enter your WiFi name
 const char *password = "xxxxx";  // Enter WiFi password
 
 // MQTT Broker
